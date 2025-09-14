@@ -20,7 +20,7 @@ CREATE TABLE Cabecalho_Nota(
     data_venda date,
     cliente_id int,
     valor_total DECIMAL(10, 2),
-    FOREIGN KEY cliente_id REFERENCES Clientes(id_C)  
+    FOREIGN KEY (cliente_id) REFERENCES Clientes(id_C)  
 );
 
 CREATE TABLE Itens_Nota(
@@ -68,4 +68,5 @@ FROM Cabecalho_Nota n
 INNER JOIN Clientes c ON n.cliente_id = c.id_C
 INNER JOIN Itens_Nota i ON n.id_N = i.nota_id
 INNER JOIN Produto p ON i.produto_id = p.id_P;
+
 
