@@ -45,7 +45,7 @@ public class ProdutoDAO {
 
             System.out.println("Inserção feita com sucesso!");
         } catch (SQLException ex) {
-            System.out.println("Erro ao inserir pessoa: " + ex.getMessage());
+            System.out.println("Erro ao inserir produto: " + ex.getMessage());
         }
     }
 
@@ -84,7 +84,7 @@ public class ProdutoDAO {
 
     public void editar(Produto produto) {
         try {
-            String sql = "UPDATE pessoa set nome=?, endereco=?, email=? WHERE id=?";
+            String sql = "UPDATE produto set nome=?, descricao=?, preco=?, estoque=? WHERE id=?";
 
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, produto.getNome());
