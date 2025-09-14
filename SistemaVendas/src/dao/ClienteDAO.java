@@ -16,6 +16,10 @@ import java.sql.ResultSet;
 
 import java.sql.SQLException;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
 /**
  *
  * @author felip / mheber
@@ -24,6 +28,11 @@ public class ClienteDAO {
 
     private Conexao conexao;
     private Connection conn;
+
+    public ClienteDAO() {
+        this.conexao = new Conexao();
+        this.conn = this.conexao.getConexao();
+    }
 
     public void inserir(Cliente cliente) {
         String sql = "INSERT INTO clientes (nome, endereco, email) VALUES(?,?,?)";
@@ -43,49 +52,52 @@ public class ClienteDAO {
         }
     }
 
+// Substitua seu método getCliente por este em ClienteDAO.java
     public Cliente getCliente(int id) {
-        String sql = "SELECT * FROM clientes WHERE id = ?";
-        
+        String sql = "SELECT * FROM clientes WHERE id_C = ?";
+
         try {
-            PreparedStatement stmt = conn.prepareStatement(
-                    sql,
-                    ResultSet.TYPE_SCROLL_INSENSITIVE,
-                    ResultSet.CONCUR_UPDATABLE
-            );
-
+            PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, id);
-            ResultSet rs = stmt.executeQuery(); 
-            Cliente c = new Cliente();
 
-            rs.first();
-            c.setId(id);
-            c.setNome(rs.getString("nome"));
-            c.setEndereco(rs.getString("endereco"));
-            c.setEmail(rs.getString("String"));
-            return c;
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                Cliente c = new Cliente();
+                c.setId(rs.getInt("id_C")); 
+                c.setNome(rs.getString("nome"));
+                c.setEndereco(rs.getString("endereco"));
+                c.setEmail(rs.getString("email")); 
+
+                return c; 
+            }
+
         } catch (SQLException ex) {
             System.out.println("Erro ao consultar cliente: " + ex.getMessage());
             return null;
         }
+
+        return null; 
     }
-    
-        public void editar(Cliente cliente) {
+
+    public void editar(Cliente cliente) {
         try {
-            String sql = "UPDATE clientes set nome=?, endereco=?, email=? WHERE id=?";
+            String sql = "UPDATE clientes set nome=?, endereco=?, email=? WHERE id_C = ?";
 
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, cliente.getNome());
             stmt.setString(2, cliente.getEndereco());
             stmt.setString(3, cliente.getEmail());
+            stmt.setInt(4, cliente.getId());
             stmt.execute();
         } catch (SQLException ex) {
             System.out.println("Erro ao atualizar cliente: " + ex.getMessage());
         }
     }
-        
-        public void excluir(int id) {
+
+    public void excluir(int id) {
         try {
-            String sql = "delete from clientes WHERE id=?";
+            String sql = "delete from clientes WHERE id_C = ?";
 
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, id);
@@ -94,4 +106,31 @@ public class ClienteDAO {
             System.out.println("Erro ao excluir cliente: " + ex.getMessage());
         }
     }
+
+    public List<Cliente> getClientes() {
+        String sql = "SELECT * FROM clientes";
+
+        List<Cliente> listaClientes = new ArrayList<>();
+
+        try {
+            PreparedStatement stmt = this.conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Cliente c = new Cliente();
+
+                c.setId(rs.getInt("id_C"));
+                c.setNome(rs.getString("nome"));
+                c.setEndereco(rs.getString("Endereco"));
+                c.setEmail(rs.getString("email"));
+                listaClientes.add(c);
+
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao carregar lisa de clientes" + e.getMessage());
+            return null;
+        }
+        return listaClientes;
+    }
+
 }
