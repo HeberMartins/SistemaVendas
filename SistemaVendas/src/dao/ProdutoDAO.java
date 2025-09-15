@@ -15,6 +15,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -49,37 +51,63 @@ public class ProdutoDAO {
         }
     }
 
-    public Produto getProduto(int id) {
-        String sql = "SELECT * FROM produto WHERE id = ?";
+//    public Produto getProduto(int id) {;
+//        String sql = "SELECT * FROM produto WHERE id = ?";
+//
+//        try {
+//            PreparedStatement stmt = conn.prepareStatement(
+//                    sql,
+//                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+//                    ResultSet.CONCUR_UPDATABLE
+//            );
+//            // 1º parâmetro é o SQL
+//            // 2º parâmetro é o tipo do ResultSet -
+//            // ResultSet scroll, ou seja, o cursor se move para frente ou para trás.
+//            // Este tipo de ResultSet é sensível às alterações feitas no banco de dados, ou seja, as modificações feitas no banco de dados são refletidas no ResultSet.
+//            // 3º parâmetro é sobre os parâmetros de concorrência – pode ser "read only" ou atualizável
+//
+//            stmt.setInt(1, id);
+//            ResultSet rs = stmt.executeQuery(); // obtenho o retorno da consulta e armazeno no ResultSet
+//            Produto p = new Produto();
+//            // Primeiramente, vamos posicionar o retorno da consulta (ResultSet) na primeira posição da consulta
+//            // Em alguns casos, a consulta terá mais de um resultado de retorno
+//            rs.first();
+//            p.setId(id);
+//            p.setNome(rs.getString("nome"));
+//            p.setDescricao(rs.getString("descricao"));
+//            p.setPreco(rs.getDouble("preco_venda"));
+//            p.setEstoque(rs.getInt("estoque"));
+//            return p;
+//        } catch (SQLException ex) {
+//            System.out.println("Erro ao consultar produto: " + ex.getMessage());
+//            return null;
+//        }
+//    }
+    public List<Produto> getProdutos() {
+        String sql = "SELECT * FROM produto";
+
+        List<Produto> listarProduto = new ArrayList<>();
 
         try {
-            PreparedStatement stmt = conn.prepareStatement(
-                    sql,
-                    ResultSet.TYPE_SCROLL_INSENSITIVE,
-                    ResultSet.CONCUR_UPDATABLE
-            );
-            // 1º parâmetro é o SQL
-            // 2º parâmetro é o tipo do ResultSet -
-            // ResultSet scroll, ou seja, o cursor se move para frente ou para trás.
-            // Este tipo de ResultSet é sensível às alterações feitas no banco de dados, ou seja, as modificações feitas no banco de dados são refletidas no ResultSet.
-            // 3º parâmetro é sobre os parâmetros de concorrência – pode ser "read only" ou atualizável
+            PreparedStatement stmt = this.conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
 
-            stmt.setInt(1, id);
-            ResultSet rs = stmt.executeQuery(); // obtenho o retorno da consulta e armazeno no ResultSet
-            Produto p = new Produto();
-            // Primeiramente, vamos posicionar o retorno da consulta (ResultSet) na primeira posição da consulta
-            // Em alguns casos, a consulta terá mais de um resultado de retorno
-            rs.first();
-            p.setId(id);
-            p.setNome(rs.getString("nome"));
-            p.setDescricao(rs.getString("descricao"));
-            p.setPreco(rs.getDouble("preco_venda"));
-            p.setEstoque(rs.getInt("estoque"));
-            return p;
-        } catch (SQLException ex) {
-            System.out.println("Erro ao consultar produto: " + ex.getMessage());
+            while (rs.next()) {
+                Produto p = new Produto();
+
+                p.setId(rs.getInt("id_C"));
+                p.setNome(rs.getString("nome"));
+                p.setDescricao(rs.getString("descricao"));
+                p.setPreco(rs.getDouble("preco_venda"));
+                p.setEstoque(rs.getInt("estoque"));
+                listarProduto.add(p);
+
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao carregar lisa de produtos" + e.getMessage());
             return null;
         }
+        return listarProduto;
     }
 
     public void editar(Produto produto) {

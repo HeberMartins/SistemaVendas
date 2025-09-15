@@ -29,7 +29,6 @@ public class menu extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         btn_Cliente = new javax.swing.JMenuItem();
-        btn_editarC = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         btn_Produto = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
@@ -51,14 +50,6 @@ public class menu extends javax.swing.JFrame {
             }
         });
         jMenu1.add(btn_Cliente);
-
-        btn_editarC.setText("Consultar");
-        btn_editarC.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_editarCActionPerformed(evt);
-            }
-        });
-        jMenu1.add(btn_editarC);
 
         jMenuBar1.add(jMenu1);
 
@@ -124,12 +115,6 @@ public class menu extends javax.swing.JFrame {
         lanNota.setVisible(true);
     }//GEN-LAST:event_btn_NotaActionPerformed
 
-    private void btn_editarCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editarCActionPerformed
-        // TODO add your handling code here:
-        ConsultCliente conCliente = new ConsultCliente();
-        conCliente.setVisible(true);
-    }//GEN-LAST:event_btn_editarCActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -169,7 +154,6 @@ public class menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem btn_Cliente;
     private javax.swing.JMenuItem btn_Nota;
     private javax.swing.JMenuItem btn_Produto;
-    private javax.swing.JMenuItem btn_editarC;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
