@@ -1,8 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.table.DefaultTableModel;
+
+import conexao.Conexao;
 
 /**
  *
@@ -15,6 +17,7 @@ public class LancamentoNota extends javax.swing.JFrame {
      */
     public LancamentoNota() {
         initComponents();
+        carregarNotas();
     }
 
     /**
@@ -33,7 +36,7 @@ public class LancamentoNota extends javax.swing.JFrame {
 
         jMenuItem1.setText("jMenuItem1");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("Relatorio de Itens");
@@ -111,6 +114,51 @@ public class LancamentoNota extends javax.swing.JFrame {
                 new LancamentoNota().setVisible(true);
             }
         });
+    }
+
+    private void carregarNotas() {
+        try {
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setRowCount(0); // limpa tabela antes de preencher
+
+            String sql = "SELECT "
+                    + "n.id_N AS nota_id, "
+                    + "n.data_venda, "
+                    + "c.nome AS cliente, "
+                    + "p.nome AS produto, "
+                    + "i.quantidade, "
+                    + "i.preco_unitario_venda, "
+                    + "(i.quantidade * i.preco_unitario_venda) AS subtotal, "
+                    + "n.valor_total "
+                    + "FROM Cabecalho_Nota n "
+                    + "INNER JOIN Clientes c ON n.cliente_id = c.id_C "
+                    + "INNER JOIN Itens_Nota i ON n.id_N = i.nota_id "
+                    + "INNER JOIN Produto p ON i.produto_id = p.id_P";
+
+            Conexao conexao = new Conexao();
+            PreparedStatement stmt = conexao.getConexao().prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Object[] row = {
+                    rs.getInt("nota_id"),
+                    rs.getDate("data_venda"),
+                    rs.getString("cliente"),
+                    rs.getString("produto"),
+                    rs.getInt("quantidade"),
+                    rs.getDouble("preco_unitario_venda"),
+                    rs.getDouble("subtotal"),
+                    rs.getDouble("valor_total")
+                };
+                model.addRow(row);
+            }
+
+            rs.close();
+            stmt.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

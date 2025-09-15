@@ -90,6 +90,9 @@ public class ConsultProduto extends javax.swing.JFrame {
         int linha = tbt_produto.getSelectedRow();
         
         Integer idProduto = (Integer) tbt_produto.getValueAt(linha, 0);
+        EditarProduto telaEditar = new EditarProduto(idProduto);
+        telaEditar.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_tbt_produtoMouseClicked
 
     /**

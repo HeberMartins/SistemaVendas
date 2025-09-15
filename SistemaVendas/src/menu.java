@@ -29,8 +29,10 @@ public class menu extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         btn_Cliente = new javax.swing.JMenuItem();
+        consultar_cliente = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         btn_Produto = new javax.swing.JMenuItem();
+        consultar = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         btn_Nota = new javax.swing.JMenuItem();
 
@@ -51,6 +53,14 @@ public class menu extends javax.swing.JFrame {
         });
         jMenu1.add(btn_Cliente);
 
+        consultar_cliente.setText("Consultar");
+        consultar_cliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                consultar_clienteActionPerformed(evt);
+            }
+        });
+        jMenu1.add(consultar_cliente);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Produto");
@@ -62,6 +72,14 @@ public class menu extends javax.swing.JFrame {
             }
         });
         jMenu2.add(btn_Produto);
+
+        consultar.setText("Consultar");
+        consultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                consultarActionPerformed(evt);
+            }
+        });
+        jMenu2.add(consultar);
 
         jMenuBar1.add(jMenu2);
 
@@ -115,6 +133,18 @@ public class menu extends javax.swing.JFrame {
         lanNota.setVisible(true);
     }//GEN-LAST:event_btn_NotaActionPerformed
 
+    private void consultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarActionPerformed
+        // TODO add your handling code here:
+        ConsultProduto conProduto = new ConsultProduto();
+        conProduto.setVisible(true);
+    }//GEN-LAST:event_consultarActionPerformed
+
+    private void consultar_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultar_clienteActionPerformed
+        // TODO add your handling code here:
+        ConsultCliente conCliente = new ConsultCliente();
+        conCliente.setVisible(true);
+    }//GEN-LAST:event_consultar_clienteActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -154,6 +184,8 @@ public class menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem btn_Cliente;
     private javax.swing.JMenuItem btn_Nota;
     private javax.swing.JMenuItem btn_Produto;
+    private javax.swing.JMenuItem consultar;
+    private javax.swing.JMenuItem consultar_cliente;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;

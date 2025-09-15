@@ -1,20 +1,41 @@
+
+import beans.Produto;
+import dao.ProdutoDAO;
+import javax.swing.JOptionPane;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author felip
  */
 public class EditarProduto extends javax.swing.JFrame {
 
+    private int idProduto;
+
     /**
      * Creates new form EditarProduto
      */
-    public EditarProduto() {
+    public EditarProduto(int idProduto) {
         initComponents();
+        this.idProduto = idProduto;
+        carregarProduto();
+    }
+
+    private void carregarProduto() {
+        ProdutoDAO pDAO = new ProdutoDAO();
+
+        Produto p = pDAO.getProduto(this.idProduto);
+
+        if (p != null) {
+            txt_nome.setText(p.getNome());
+            txt_descricao.setText(p.getDescricao());
+            txt_preco.setText(String.valueOf(p.getPreco()));
+            txt_estoque.setText(String.valueOf(p.getEstoque()));
+        }
     }
 
     /**
@@ -38,10 +59,10 @@ public class EditarProduto extends javax.swing.JFrame {
         btn_salvar = new javax.swing.JButton();
         btn_excluir = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jLabel1.setText("Cadastrar Produto");
+        jLabel1.setText("Editar Produto");
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 11)); // NOI18N
         jLabel2.setText("Nome");
@@ -158,48 +179,72 @@ public class EditarProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_descricaoActionPerformed
 
     private void btn_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salvarActionPerformed
+        Produto p = new Produto();
+        ProdutoDAO produtoDAO = new ProdutoDAO();
 
+        p.setNome(txt_nome.getText());
+        p.setDescricao(txt_descricao.getText());
+
+        try {
+            double preco = Double.parseDouble(txt_preco.getText().replace(",", "."));
+            p.setPreco(preco);
+
+            int estoque = Integer.parseInt(txt_estoque.getText());
+            p.setEstoque(estoque);
+
+            produtoDAO.editar(p);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Digite valores numéricos válidos para preço e estoque.");
+        }
     }//GEN-LAST:event_btn_salvarActionPerformed
 
     private void btn_excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_excluirActionPerformed
         // TODO add your handling code here:
-        
+        int resposta = JOptionPane.showConfirmDialog(null, "Deseja Realmente Excluir?");
+
+        if (resposta == JOptionPane.YES_OPTION) {
+            ProdutoDAO pDAO = new ProdutoDAO();
+            pDAO.excluir(this.idProduto);
+
+            JOptionPane.showMessageDialog(this, "Produto excluído com sucesso!");
+            this.dispose();
+        }
     }//GEN-LAST:event_btn_excluirActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EditarProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EditarProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EditarProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EditarProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new EditarProduto().setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {;
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(EditarProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(EditarProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(EditarProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(EditarProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new EditarProduto().setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_excluir;

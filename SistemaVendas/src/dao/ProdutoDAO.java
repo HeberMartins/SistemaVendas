@@ -51,68 +51,62 @@ public class ProdutoDAO {
         }
     }
 
-//    public Produto getProduto(int id) {;
-//        String sql = "SELECT * FROM produto WHERE id = ?";
-//
-//        try {
-//            PreparedStatement stmt = conn.prepareStatement(
-//                    sql,
-//                    ResultSet.TYPE_SCROLL_INSENSITIVE,
-//                    ResultSet.CONCUR_UPDATABLE
-//            );
-//            // 1º parâmetro é o SQL
-//            // 2º parâmetro é o tipo do ResultSet -
-//            // ResultSet scroll, ou seja, o cursor se move para frente ou para trás.
-//            // Este tipo de ResultSet é sensível às alterações feitas no banco de dados, ou seja, as modificações feitas no banco de dados são refletidas no ResultSet.
-//            // 3º parâmetro é sobre os parâmetros de concorrência – pode ser "read only" ou atualizável
-//
-//            stmt.setInt(1, id);
-//            ResultSet rs = stmt.executeQuery(); // obtenho o retorno da consulta e armazeno no ResultSet
-//            Produto p = new Produto();
-//            // Primeiramente, vamos posicionar o retorno da consulta (ResultSet) na primeira posição da consulta
-//            // Em alguns casos, a consulta terá mais de um resultado de retorno
-//            rs.first();
-//            p.setId(id);
-//            p.setNome(rs.getString("nome"));
-//            p.setDescricao(rs.getString("descricao"));
-//            p.setPreco(rs.getDouble("preco_venda"));
-//            p.setEstoque(rs.getInt("estoque"));
-//            return p;
-//        } catch (SQLException ex) {
-//            System.out.println("Erro ao consultar produto: " + ex.getMessage());
-//            return null;
-//        }
-//    }
-    public List<Produto> getProdutos() {
-        String sql = "SELECT * FROM produto";
-
-        List<Produto> listarProduto = new ArrayList<>();
+    public Produto getProduto(int id) {;
+        String sql = "SELECT * FROM produto WHERE id_P = ?";
 
         try {
-            PreparedStatement stmt = this.conn.prepareStatement(sql);
+            PreparedStatement stmt = conn.prepareStatement(
+                    sql,
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE
+            );
+
+            stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
+            Produto p = new Produto();
+
+            rs.first();
+            p.setId(id);
+            p.setNome(rs.getString("nome"));
+            p.setDescricao(rs.getString("descricao"));
+            p.setPreco(rs.getDouble("preco_venda"));
+            p.setEstoque(rs.getInt("estoque"));
+            return p;
+        } catch (SQLException ex) {
+            System.out.println("Erro ao consultar produto: " + ex.getMessage());
+            return null;
+        }
+    }
+
+    public List<Produto> getProdutos() {
+        String sql = "SELECT * FROM produto";
+        List<Produto> listarProduto = new ArrayList<>();
+
+        try (PreparedStatement stmt = this.conn.prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
                 Produto p = new Produto();
 
-                p.setId(rs.getInt("id_C"));
+                p.setId(rs.getInt("id_P"));
                 p.setNome(rs.getString("nome"));
                 p.setDescricao(rs.getString("descricao"));
                 p.setPreco(rs.getDouble("preco_venda"));
                 p.setEstoque(rs.getInt("estoque"));
-                listarProduto.add(p);
 
+                listarProduto.add(p);
             }
+
         } catch (SQLException e) {
-            System.out.println("Erro ao carregar lisa de produtos" + e.getMessage());
-            return null;
+            System.out.println("Erro ao carregar lista de produtos: " + e.getMessage());
         }
+
         return listarProduto;
     }
 
     public void editar(Produto produto) {
         try {
-            String sql = "UPDATE produto set nome=?, descricao=?, preco=?, estoque=? WHERE id=?";
+            String sql = "UPDATE produto set nome=?, descricao=?, preco=?, estoque=? WHERE id_P=?";
 
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, produto.getNome());
@@ -127,14 +121,14 @@ public class ProdutoDAO {
     }
 
     public void excluir(int id) {
-        try {
-            String sql = "delete from produto WHERE id=?";
-
-            PreparedStatement stmt = conn.prepareStatement(sql);
+        String sql = "DELETE FROM Produto WHERE id_P=?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);
-            stmt.execute();
-        } catch (SQLException ex) {
-            System.out.println("Erro ao excluir produto: " + ex.getMessage());
+
+            int linhas = stmt.executeUpdate();
+            System.out.println("Linhas excluídas: " + linhas);
+        } catch (SQLException e) {
+            System.out.println("Erro ao excluir produto: " + e.getMessage());
         }
     }
 }
