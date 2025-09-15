@@ -31,7 +31,7 @@ public class ProdutoDAO {
     }
 
     public void inserir(Produto produto) {
-        String sql = "INSERT INTO Produto (nome, descricao, preco_venda, estoque) VALUES(?,?,?)";
+        String sql = "INSERT INTO Produto (nome, descricao, preco_venda, estoque) VALUES(?,?,?,?)";
 
         try {
             PreparedStatement stat = this.conn.prepareStatement(sql);

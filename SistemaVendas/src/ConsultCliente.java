@@ -39,7 +39,7 @@ public class ConsultCliente extends javax.swing.JFrame {
         tbClientes = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         tbClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -89,7 +89,7 @@ public class ConsultCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tbClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbClientesMouseClicked
-               int linha = tbClientes.getSelectedRow();
+        int linha = tbClientes.getSelectedRow();
         
         Integer idCliente = (Integer) tbClientes.getValueAt(linha, 0);
         

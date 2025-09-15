@@ -121,7 +121,7 @@ public class ClienteDAO {
 
                 c.setId(rs.getInt("id_C"));
                 c.setNome(rs.getString("nome"));
-                c.setEndereco(rs.getString("Endereco"));
+                c.setEndereco(rs.getString("endereco"));
                 c.setEmail(rs.getString("email"));
                 listaClientes.add(c);
 
