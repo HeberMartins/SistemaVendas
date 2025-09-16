@@ -215,7 +215,6 @@ public class CadastroNota extends javax.swing.JFrame {
         NotaDAO nDAO = new NotaDAO();
         
         c.setCliente(idCliente);
-        c.set
     }//GEN-LAST:event_btn_salvarActionPerformed
 
     /**
