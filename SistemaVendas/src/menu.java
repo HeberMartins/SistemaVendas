@@ -35,6 +35,7 @@ public class menu extends javax.swing.JFrame {
         consultar = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         btn_Nota = new javax.swing.JMenuItem();
+        nota = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -93,6 +94,14 @@ public class menu extends javax.swing.JFrame {
         });
         jMenu3.add(btn_Nota);
 
+        nota.setText("Cadastrar");
+        nota.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                notaActionPerformed(evt);
+            }
+        });
+        jMenu3.add(nota);
+
         jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
@@ -145,6 +154,12 @@ public class menu extends javax.swing.JFrame {
         conCliente.setVisible(true);
     }//GEN-LAST:event_consultar_clienteActionPerformed
 
+    private void notaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_notaActionPerformed
+        // TODO add your handling code here:
+        CadastroNota caNota = new CadastroNota();
+        caNota.setVisible(true);
+    }//GEN-LAST:event_notaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -190,5 +205,6 @@ public class menu extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem nota;
     // End of variables declaration//GEN-END:variables
 }

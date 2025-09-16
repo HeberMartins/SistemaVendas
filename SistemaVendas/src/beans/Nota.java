@@ -9,7 +9,7 @@ package beans;
  *
  * @author felip 
  */
-public class Cabecalho {
+public class Nota {
     private int id;
     private String data;
     private int clienteId;

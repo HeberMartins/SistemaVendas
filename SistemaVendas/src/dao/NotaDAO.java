@@ -1,6 +1,6 @@
 package dao;
 
-import beans.Cabecalho;
+import beans.Nota;
 import conexao.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,7 +16,7 @@ public class NotaDAO {
     private Conexao conexao;
     private Connection conn;
 
-    public void inserir(Cabecalho nota) {
+    public void inserir(Nota nota) {
         String sql = "INSERT INTO cabecalho_nota(data_venda, cliente_id, valor_total) VALUES(?,?,?)";
 
         try {
@@ -33,7 +33,7 @@ public class NotaDAO {
         }
     }
 
-    public Cabecalho getNota(int id) {
+    public Nota getNota(int id) {
         String sql = "SELECT * FROM cabecalho_nota WHERE id=?";
 
         try {
@@ -45,7 +45,7 @@ public class NotaDAO {
 
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
-            Cabecalho c = new Cabecalho();
+            Nota c = new Nota();
 
             rs.first();
             c.setId(id);
@@ -59,7 +59,7 @@ public class NotaDAO {
         }
     }
 
-    public void editar(Cabecalho nota) {
+    public void editar(Nota nota) {
         try {
             String sql = "UPDATE cabecalho_nota set data_venda=?, cleinte_id=?, valor_total=? WHERE id=?";
 
