@@ -1,6 +1,4 @@
-DROP DATABASE IF EXISTS SisVendas;
 CREATE DATABASE SisVendas;
-USE SisVendas;
 
 CREATE TABLE Clientes(
     id_C INT PRIMARY KEY AUTO_INCREMENT,
@@ -92,3 +90,4 @@ INNER JOIN Clientes c ON n.cliente_id = c.id_C
 INNER JOIN Itens_Nota i ON n.id_N = i.nota_id
 INNER JOIN Produto p ON i.produto_id = p.id_P
 WHERE n.id_N = @id_nova_nota;
+
