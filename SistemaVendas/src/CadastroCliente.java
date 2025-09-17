@@ -3,6 +3,7 @@ import beans.Cliente;
 import dao.ClienteDAO;
 import java.util.HashSet;
 import java.util.Set;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -170,7 +171,8 @@ public class CadastroCliente extends javax.swing.JFrame {
        
        ClienteDAO cDAO = new ClienteDAO();
        cDAO.inserir(c);
-       
+       JOptionPane.showMessageDialog(this, "Cliente cadastrado com sucesso!");
+       this.dispose();
         
     }//GEN-LAST:event_btnCadastrarActionPerformed
 

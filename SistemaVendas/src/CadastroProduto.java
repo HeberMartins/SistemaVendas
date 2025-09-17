@@ -178,6 +178,8 @@ public class CadastroProduto extends javax.swing.JFrame {
 
             produtoDAO.inserir(p);
             limparformulario();
+            JOptionPane.showMessageDialog(this, "Produto cadastrado com sucesso!");
+            this.dispose();
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Digite valores numéricos válidos para preço e estoque.");
         }
