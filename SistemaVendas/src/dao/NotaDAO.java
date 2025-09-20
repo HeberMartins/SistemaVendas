@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
@@ -15,6 +16,36 @@ public class NotaDAO {
 
     private Conexao conexao;
     private Connection conn;
+
+    public NotaDAO() {
+        this.conexao = new Conexao();
+        this.conn = this.conexao.getConexao();
+    }
+
+    public int inserirCabecalho(Nota nota) {
+        String sql = "  INSERT INTO cabecalho_nota(data_venda, cliente_id) VALUES(?,?)";
+
+        try {
+            PreparedStatement stmt = this.conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            stmt.setString(1, nota.getData());
+            stmt.setInt(2, nota.getCliente());
+
+            int affectedRows = stmt.executeUpdate();
+
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    return generatedKeys.getInt(1);
+                } else {
+                    throw new SQLException("A inserção falhou, nenhum ID obtido.");
+                }
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Erro ao inserir cabeçalho da nota: " + ex.getMessage());
+            return -1;
+        }
+    }
 
     public void inserir(Nota nota) {
         String sql = "INSERT INTO cabecalho_nota(data_venda, cliente_id, valor_total) VALUES(?,?,?)";
@@ -83,5 +114,22 @@ public class NotaDAO {
         } catch (SQLException ex) {
             System.out.println("Erro ao excluir nota: " + ex.getMessage());
         }
+    }
+
+    public int getUltimoIdNota() {
+        // Comando SQL que pega o maior valor da coluna id_N
+        String sql = "SELECT MAX(id_N) FROM cabecalho_nota";
+
+        try {
+            PreparedStatement stmt = this.conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+            return rs.getInt(1);
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao buscar último ID da nota: " + e.getMessage());
+        }
+
+        return 0;
     }
 }
