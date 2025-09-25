@@ -117,14 +117,23 @@ public class NotaDAO {
     }
 
     public int getUltimoIdNota() {
-        // Comando SQL que pega o maior valor da coluna id_N
         String sql = "SELECT MAX(id_N) FROM cabecalho_nota";
 
         try {
             PreparedStatement stmt = this.conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
 
-            return rs.getInt(1);
+            if (rs.next()) {
+
+                // 3. AGORA que o cursor está em uma linha válida, é SEGURO ler os dados.
+                int maxId = rs.getInt(1);
+
+                if (rs.wasNull()) {
+                    return 0;
+                } else {
+                    return maxId;
+                }
+            }
 
         } catch (SQLException e) {
             System.out.println("Erro ao buscar último ID da nota: " + e.getMessage());

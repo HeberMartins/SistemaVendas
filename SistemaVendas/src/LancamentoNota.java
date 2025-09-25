@@ -52,6 +52,7 @@ public class LancamentoNota extends javax.swing.JFrame {
                 "nota_id", "data_venda", "cliente", "produto", "quantidade", "preco_unitario", "subtotal", "valor_total"
             }
         ));
+        jTable1.setEnabled(false);
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -119,7 +120,7 @@ public class LancamentoNota extends javax.swing.JFrame {
     private void carregarNotas() {
         try {
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-            model.setRowCount(0); // limpa tabela antes de preencher
+            model.setRowCount(0);
 
             String sql = "SELECT "
                     + "n.id_N AS nota_id, "

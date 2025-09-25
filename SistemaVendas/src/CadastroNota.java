@@ -64,14 +64,14 @@ public class CadastroNota extends javax.swing.JFrame {
         btn_salvar = new javax.swing.JButton();
         btn_limpar = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        txfId = new javax.swing.JTextField();
+        txtId = new javax.swing.JTextField();
         btnAdicionar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         btnConsultar = new javax.swing.JButton();
         btnExcluirItem = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel1.setText("Lançamento de Nota");
@@ -126,9 +126,9 @@ public class CadastroNota extends javax.swing.JFrame {
 
         jLabel6.setText("id");
 
-        txfId.addActionListener(new java.awt.event.ActionListener() {
+        txtId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txfIdActionPerformed(evt);
+                txtIdActionPerformed(evt);
             }
         });
 
@@ -178,7 +178,7 @@ public class CadastroNota extends javax.swing.JFrame {
                         .addGap(62, 62, 62)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txfId, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -224,7 +224,7 @@ public class CadastroNota extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel6)
-                        .addComponent(txfId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
@@ -292,9 +292,13 @@ public class CadastroNota extends javax.swing.JFrame {
             
             int ultimoId = notaDAO.getUltimoIdNota();
             
+            System.out.println(notaDAO.getUltimoIdNota());
+            
             int proximoId = ultimoId + 1;
             
-            txfId.setText(String.valueOf(proximoId));
+            System.out.println(proximoId);
+            
+            txtId.setText(String.valueOf(proximoId));
 
             cbx_cliente.setEnabled(false);
             cbx_produtos.setEnabled(true);
@@ -320,7 +324,7 @@ public class CadastroNota extends javax.swing.JFrame {
 
             if (mapaProdutos.containsKey(nomeSelecionado)) {
                 idProduto = mapaProdutos.get(nomeSelecionado);
-                System.out.println("Selecionado: " + nomeSelecionado + " (ID: " + idCliente + ")");
+                System.out.println("Selecionado: " + nomeSelecionado + " (ID: " + idProduto + ")");
             } else {
                 System.out.println("Produto não encontrado no mapa: " + nomeSelecionado);
             }
@@ -364,9 +368,9 @@ public class CadastroNota extends javax.swing.JFrame {
         limparFormulario();
     }//GEN-LAST:event_btn_salvarActionPerformed
 
-    private void txfIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfIdActionPerformed
+    private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txfIdActionPerformed
+    }//GEN-LAST:event_txtIdActionPerformed
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
         // TODO add your handling code here:
@@ -402,7 +406,7 @@ public class CadastroNota extends javax.swing.JFrame {
 
     private void limparFormulario() {
 
-        txfId.setText("");
+        txtId.setText("");
         txt_data.setText("");
         txt_vendida.setText("");
 
@@ -539,7 +543,7 @@ public class CadastroNota extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField txfId;
+    private javax.swing.JTextField txtId;
     private javax.swing.JTextField txt_data;
     private javax.swing.JTextField txt_vendida;
     // End of variables declaration//GEN-END:variables
