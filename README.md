@@ -1,2 +1,2 @@
 # SistemaVendas
-Sistema de Vendas desevolvido apartir do Java Swing utilisando MYSQL como banco de dados
+Sistema de Vendas desevolvido a partir do Java Swing utilisando MYSQL como banco de dados
