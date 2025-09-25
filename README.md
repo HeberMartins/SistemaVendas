@@ -52,4 +52,4 @@ Como Executar
 
     Execute o arquivo principal da interface (CadastroNota.java) para iniciar a aplicação.
 
-Desenvolvido por [Felipe Nascimento](https://github.com/felip-SN)  [Heber Martins](https://github.com/HeberMartins)
+Desenvolvido por [Felipe Nascimento](https://github.com/felip-SN) & [Heber Martins](https://github.com/HeberMartins)
