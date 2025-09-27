@@ -24,8 +24,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class CadastroNota extends javax.swing.JFrame {
 
-    private Map<String, Integer> mapaClientes = new HashMap<>();
-    private Map<String, Integer> mapaProdutos = new HashMap<>();
+    private Map<Integer, String> mapaClientes = new HashMap<>();
+    private Map<Integer, String> mapaProdutos = new HashMap<>();
     private DefaultTableModel tableModel;
     int idCliente;
     int idProduto;
@@ -284,20 +284,25 @@ public class CadastroNota extends javax.swing.JFrame {
         }
 
         String nomeSelecionado = selected.toString();
-        if (mapaClientes.containsKey(nomeSelecionado)) {
-           
-            idCliente = mapaClientes.get(nomeSelecionado);
-            
+        if (mapaClientes.containsValue(nomeSelecionado)) {
+
+            for (Map.Entry<Integer, String> entry : mapaClientes.entrySet()) {
+                if (entry.getValue().equals(nomeSelecionado)) {
+                    idCliente = entry.getKey();
+                    break;
+                }
+            }
+
             NotaDAO notaDAO = new NotaDAO();
-            
+
             int ultimoId = notaDAO.getUltimoIdNota();
-            
+
             System.out.println(notaDAO.getUltimoIdNota());
-            
+
             int proximoId = ultimoId + 1;
-            
+
             System.out.println(proximoId);
-            
+
             txtId.setText(String.valueOf(proximoId));
 
             cbx_cliente.setEnabled(false);
@@ -322,11 +327,11 @@ public class CadastroNota extends javax.swing.JFrame {
         if (selected != null) {
             String nomeSelecionado = selected.toString();
 
-            if (mapaProdutos.containsKey(nomeSelecionado)) {
-                idProduto = mapaProdutos.get(nomeSelecionado);
-                System.out.println("Selecionado: " + nomeSelecionado + " (ID: " + idProduto + ")");
-            } else {
-                System.out.println("Produto não encontrado no mapa: " + nomeSelecionado);
+            for (Map.Entry<Integer, String> entry : mapaProdutos.entrySet()) {
+                if (entry.getValue().equals(nomeSelecionado)) {
+                    idProduto = entry.getKey(); // pega o ID correto
+                    break;
+                }
             }
         }
     }//GEN-LAST:event_cbx_produtosActionPerformed
@@ -497,7 +502,7 @@ public class CadastroNota extends javax.swing.JFrame {
             if (listaClientes != null) {
                 for (Cliente c : listaClientes) {
                     cbx_cliente.addItem(c.getNome());
-                    mapaClientes.put(c.getNome(), c.getId());
+                    mapaClientes.put(c.getId(), c.getNome());
                 }
             }
 
@@ -517,7 +522,7 @@ public class CadastroNota extends javax.swing.JFrame {
             if (listarProdutos != null) {
                 for (Produto p : listarProdutos) {
                     cbx_produtos.addItem(p.getNome());
-                    mapaProdutos.put(p.getNome(), p.getId());
+                    mapaProdutos.put(p.getId(), p.getNome());
                 }
             }
 
